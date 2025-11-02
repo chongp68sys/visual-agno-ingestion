@@ -1,0 +1,11 @@
+from agno.workflows import Workflow
+{% for agent in agents %}from src.generated.agents.{{ agent|lower }} import {{ agent }}
+{% endfor %}
+class {{ (name|replace(' ','') ) }}Workflow(Workflow):
+    """Auto-generated Workflow from OpenSpec. {{ description|default('') }}"""
+    async def run(self, ctx):
+        {% for agent in agents %}{{ agent.lower() }} = {{ agent }}()
+        {% endfor %}
+        {% for step in sequence %}{{ step }}
+        {% endfor %}
+        return {"status":"completed"}

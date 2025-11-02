@@ -1,0 +1,5 @@
+from agno.tools import Tool
+class {{ name }}(Tool):
+    """Auto-generated Tool from OpenSpec. {{ description|default('') }}"""
+    async def run(self, {{ inputs|join(', ') if inputs else '**kwargs' }}) -> dict:
+        return {"result": "{{ name }} executed"}

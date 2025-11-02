@@ -1,0 +1,36 @@
+version: 1
+project: Visual Agentic Ingestion Platform
+description: Visual builder for agentic workflows using Agno; agents are tool-less until UI attaches tools.
+
+sources:
+  - openspec/specs
+  - openspec/changes
+
+build:
+  output: .openspec_build
+
+generators:
+  - name: python-agno
+    output: ./src/generated/
+    include:
+      - openspec/specs/agents
+      - openspec/specs/tools
+      - openspec/specs/workflows
+    template:
+      agent: templates/python/agent.j2
+      tool: templates/python/tool.j2
+      workflow: templates/python/workflow.j2
+
+  - name: typescript-ui
+    output: ./src/ui/generated/
+    include:
+      - openspec/specs/agents
+      - openspec/specs/tools
+    template:
+      registry: templates/typescript/registry.j2
+
+options:
+  overwrite: true
+  clean_output: true
+  verbose: true
+  markdown: true

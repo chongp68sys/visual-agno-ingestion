@@ -1,0 +1,13 @@
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
+{% for tool in tools %}from src.generated.tools.{{ tool|lower }} import {{ tool }}
+{% endfor %}
+class {{ (name|replace(' ','') ) }}(Agent):
+    """Auto-generated Agent from OpenSpec."""
+    def __init__(self):
+        super().__init__(
+            name="{{ name }}",
+            model=OpenAIChat(id="gpt-5-mini"),
+            tools=[{% for tool in tools %}{{ tool }}(), {% endfor %}],
+            markdown=True,
+        )

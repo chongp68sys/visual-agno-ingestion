@@ -1,0 +1,10 @@
+export interface ToolDefinition { name: string; description: string; inputs: Record<string,string>; outputs: Record<string,string>; }
+export interface AgentDefinition { name: string; description: string; tools: string[]; }
+export const TOOL_REGISTRY: ToolDefinition[] = [
+{% for tool in tools %}{ name: "{{ tool.name }}", description: "{{ tool.description|replace('\n',' ') }}", inputs: { {% for k,v in tool.inputs_schema.items() %}"{{k}}":"{{v}}",{% endfor %} }, outputs: { {% for k,v in tool.outputs_schema.items() %}"{{k}}":"{{v}}",{% endfor %} } },
+{% endfor %}];
+export const AGENT_REGISTRY: AgentDefinition[] = [
+{% for agent in agents %}{ name: "{{ agent.name }}", description: "{{ agent.description|replace('\n',' ') }}", tools: [{% for t in agent.tools %}"{{t}}",{% endfor %}] },
+{% endfor %}];
+export const REGISTRY_VERSION = "{{ version or '0.1.0' }}";
+export const GENERATED_AT = "{{ now }}";

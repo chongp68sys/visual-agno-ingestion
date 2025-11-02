@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.openspec_build/
+node_modules/
+dist/
+.env
+*.pyc
+.idea/
+.vscode/
+src/generated/
+src/ui/generated/
